@@ -1,42 +1,9 @@
 import React from "react";
 import './App.css';
-import { Button, Card, Form } from 'react-bootstrap';
+import {Card} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-function Todo({ todo, index, markTodo, removeTodo }) {
-  return (
-    <div
-      className="todo"
-      >
-        <span style={{ textDecoration: todo.isDone ? "line-through" : "" }}>{todo.text}</span>
-      <div>
-      <Button variant="outline-success" onClick={() => markTodo(index)}>✓</Button>{' '}
-      <Button variant="outline-danger" onClick={() => removeTodo(index)}>✕</Button>
-      </div>
-    </div>
-  )
-}
-
-function FormTodo ({ addTodo }) {
-  const [value, setValue] = React.useState("");
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (!value) return;
-    addTodo(value);
-    setValue("");
-  };
-
-  return (
-    <Form onSubmit = {handleSubmit}>
-      <Form.Group>
-        <Form.Label><b>Add Todo</b></Form.Label>
-        <Form.Control type ="text" className="input" value={value} onChange={e => setValue(e.target.value)} placeholder = "Add new todo" />
-      </Form.Group>
-      <Button variant="primary mb-3" type="submit">Submit</Button>
-      </Form>
-  );
-}
+import Todo from './components/Todo';
+import FormTodo from './components/Form-Todo';
 
 function App() {
   const [todos, setTodos] = React.useState ([
@@ -46,17 +13,30 @@ function App() {
     }
   ]);
 
+/**
+ * The addTodo function takes a text parameter, creates a new array with the spread operator, and then
+ * sets the state of todos to the new array.
+ */
   const addTodo = text => {
     const newTodos = [...todos, {text}];
     setTodos(newTodos);
   };
 
+/**
+ * The markTodo function takes an index as an argument, creates a new array of todos, sets the isDone
+ * property of the todo at the given index to true, and then sets the todos state to the new array of
+ * todos.
+ */
   const markTodo = index => {
     const newTodos = [...todos,];
     newTodos[index].isDone = true;
     setTodos(newTodos);
   };
 
+/**
+ * It takes an index as an argument, creates a new array from the existing todos array, deletes the
+ * item at the index, and then sets the todos array to the new array.
+ */
   const removeTodo = index => {
     const newTodos = [...todos];
     // newTodos[index].splice(index, 1);
